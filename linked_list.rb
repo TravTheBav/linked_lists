@@ -3,18 +3,16 @@
 require_relative 'node'
 
 class LinkedList
-  attr_reader :head, :tail, :size
+  attr_reader :head, :tail
 
   def initialize
     @head = nil
     @tail = nil
-    @size = 0
   end
 
   # adds a new node containing 'value' to the end of the list
   def append(value)
     new_node = Node.new(value)
-    @size += 1
     if head.nil?
       @head = new_node
       @tail = @head
@@ -27,7 +25,6 @@ class LinkedList
   # adds a new node containing 'value' to the beginning of the list
   def prepend(value)
     new_node = Node.new(value)
-    @size += 1
     if head.nil?
       @head = new_node
       @tail = @head
@@ -37,9 +34,24 @@ class LinkedList
     end    
   end
 
+  # returns the size of the list
+  def size
+    return 0 if @head.nil?
+
+    total_nodes = 1
+    current_node = @head
+
+    until current_node.next_node.nil?
+      total_nodes += 1
+      current_node = current_node.next_node
+    end
+
+    total_nodes
+  end
+
   # returns the node at the given index; does not work with negative indexes
   def at(index)
-    return nil if index < 0 || index > @size - 1
+    return nil if index < 0 || index > size - 1
 
     i = 0
     node = @head
@@ -52,19 +64,18 @@ class LinkedList
 
   # removes the last element from the list
   def pop
-    return nil if @size.zero?
+    return nil if size == 0
 
-    if @size == 1
+    if size == 1
       popped_node = @head
       @head = nil
       @tail = nil
     else
       popped_node = @tail
-      new_tail = self.at(@size - 2)
+      new_tail = self.at(size - 2)
       new_tail.next_node = nil
       @tail = new_tail
     end
-    @size -= 1
     popped_node
   end
 
