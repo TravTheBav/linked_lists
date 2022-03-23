@@ -37,6 +37,7 @@ class LinkedList
     end    
   end
 
+  # returns the node at the given index; does not work with negative indexes
   def at(index)
     return nil if index < 0 || index > @size - 1
 
@@ -47,6 +48,24 @@ class LinkedList
       i += 1
     end
     node
+  end
+
+  # removes the last element from the list
+  def pop
+    return nil if @size.zero?
+
+    if @size == 1
+      popped_node = @head
+      @head = nil
+      @tail = nil
+    else
+      popped_node = @tail
+      new_tail = self.at(@size - 2)
+      new_tail.next_node = nil
+      @tail = new_tail
+    end
+    @size -= 1
+    popped_node
   end
 
 end
