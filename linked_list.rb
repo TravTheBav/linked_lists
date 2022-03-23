@@ -14,27 +14,39 @@ class LinkedList
   # adds a new node containing 'value' to the end of the list
   def append(value)
     new_node = Node.new(value)
+    @size += 1
     if head.nil?
       @head = new_node
       @tail = @head
     else
       @tail.next_node = new_node
       @tail = new_node
-    end
-    @size += 1
+    end    
   end
 
   # adds a new node containing 'value' to the beginning of the list
   def prepend(value)
     new_node = Node.new(value)
+    @size += 1
     if head.nil?
       @head = new_node
       @tail = @head
     else
       new_node.next_node = @head
       @head = new_node
+    end    
+  end
+
+  def at(index)
+    return nil if index < 0 || index > @size - 1
+
+    i = 0
+    node = @head
+    while i < index
+      node = node.next_node
+      i += 1
     end
-    @size += 1
+    node
   end
 
 end
