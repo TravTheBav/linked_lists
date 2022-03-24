@@ -8,10 +8,6 @@ class Node
     @next_node = nil
   end
 
-  def inspect
-    "value: #{value}, next node: #{next_node}"
-  end
-
   def value
     @value
   end

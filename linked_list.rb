@@ -79,4 +79,35 @@ class LinkedList
     popped_node
   end
 
+  def contains?(value)
+    idx = 0
+    while idx < size
+      return true if value == at(idx).value
+
+      idx += 1
+    end
+    false
+  end
+
+  def find(value)
+    idx = 0
+    while idx < size
+      return idx if value == at(idx).value
+
+      idx += 1
+    end
+    nil
+  end
+
+  def to_s
+    idx = 0
+    str = ""
+    while idx < size
+      value = at(idx).value
+
+      str += "( #{value} ) -> "
+      idx += 1
+    end
+    str + "nil"
+  end
 end
