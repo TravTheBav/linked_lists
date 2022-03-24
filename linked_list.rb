@@ -19,7 +19,7 @@ class LinkedList
     else
       @tail.next_node = new_node
       @tail = new_node
-    end    
+    end
   end
 
   # adds a new node containing 'value' to the beginning of the list
@@ -31,7 +31,7 @@ class LinkedList
     else
       new_node.next_node = @head
       @head = new_node
-    end    
+    end
   end
 
   # returns the size of the list
@@ -51,7 +51,7 @@ class LinkedList
 
   # returns the node at the given index; does not work with negative indexes
   def at(index)
-    return nil if index < 0 || index > size - 1
+    return nil if index.negative? || index > size - 1
 
     i = 0
     node = @head
@@ -64,7 +64,7 @@ class LinkedList
 
   # removes the last element from the list
   def pop
-    return nil if size == 0
+    return nil if size.zero?
 
     if size == 1
       popped_node = @head
@@ -72,7 +72,7 @@ class LinkedList
       @tail = nil
     else
       popped_node = @tail
-      new_tail = self.at(size - 2)
+      new_tail = at(size - 2)
       new_tail.next_node = nil
       @tail = new_tail
     end
@@ -109,5 +109,38 @@ class LinkedList
       idx += 1
     end
     str + "nil"
+  end
+
+  # will append a node with given value if index is greater than the last available index
+  def insert_at(value, idx)
+    begin
+      if size.zero? || idx > size - 1
+        append(value)
+      else
+        tmp = at(idx)
+        new_node = Node.new(value)
+        at(idx - 1).next_node = new_node
+        new_node.next_node = tmp
+      end
+    rescue
+      puts 'does not take negative indexes'
+    end
+  end
+
+  def remove_at(index)
+    return if head.nil?
+
+    begin
+      if index.zero?
+        @head = at(index).next_node
+      elsif index == size - 1
+        pop
+      else
+        new_next_node = at(index).next_node
+        at(index - 1).next_node = new_next_node
+      end
+    rescue
+      puts 'given index out of range'
+    end
   end
 end
